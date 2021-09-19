@@ -1,0 +1,31 @@
+{
+    "name": "uitesting-playwright",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Ghalistan/uitesting-playwright.git"
+    },
+    "lint-staged": {
+        "**/*": "prettier --write --ignore-unknown"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Ghalistan/uitesting-playwright/issues"
+    },
+    "homepage": "https://github.com/Ghalistan/uitesting-playwright#readme",
+    "devDependencies": {
+        "@playwright/test": "^1.14.1",
+        "husky": "^7.0.2",
+        "lint-staged": "^11.1.2",
+        "playwright": "^1.14.1",
+        "prettier": "^2.4.1"
+    }
+}
