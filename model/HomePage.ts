@@ -7,9 +7,15 @@ import { DIDPage } from './DIDPage';
 import { DTPage } from './DTPage';
 import { HLPage } from './HLPage';
 import { LDPage } from './LDPage';
+import { MOPage } from './MOPage';
+import { NBSPPage } from './NBSPPage';
 import { PageModel } from './PageModel';
+import { PBPage } from './PBPage';
+import { SAPage } from './SAPage';
 import { ScrollbarsPage } from './ScrollbarsPage';
 import { TIPage } from './TIPage';
+import { VisibilityPage } from './VisibilityPage';
+import { VTPage } from './VTPage';
 
 export class HomePage extends PageModel {
     constructor(page: Page) {
@@ -63,11 +69,46 @@ export class HomePage extends PageModel {
 
     async clickScrollbars(): Promise<ScrollbarsPage> {
         await this.page.click(`a[href="/scrollbars"]`);
+        await this.page.waitForLoadState();
         return new ScrollbarsPage(this.page);
     }
 
     async clickDynamicTable(): Promise<DTPage> {
         await this.page.click(`a[href="/dynamictable"]`);
         return new DTPage(this.page);
+    }
+
+    async clickVerifyText(): Promise<VTPage> {
+        await this.page.click(`a[href="/verifytext"]`);
+        return new VTPage(this.page);
+    }
+
+    async clickProgressBar(): Promise<PBPage> {
+        await this.page.click(`a[href="/progressbar"]`);
+        return new PBPage(this.page);
+    }
+
+    async clickVisibility(): Promise<VisibilityPage> {
+        await this.page.click(`a[href="/visibility"]`);
+        await this.page.waitForLoadState();
+        return new VisibilityPage(this.page);
+    }
+
+    async clickSampleApp(): Promise<SAPage> {
+        await this.page.click(`a[href="/sampleapp"]`);
+        await this.page.waitForLoadState();
+        return new SAPage(this.page);
+    }
+
+    async clickMouseOver(): Promise<MOPage> {
+        await this.page.click(`a[href="/mouseover"]`);
+        await this.page.waitForLoadState();
+        return new MOPage(this.page);
+    }
+
+    async clickNBSP(): Promise<NBSPPage> {
+        await this.page.click(`a[href="/nbsp"]`);
+        await this.page.waitForLoadState();
+        return new NBSPPage(this.page);
     }
 }

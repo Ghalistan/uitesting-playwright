@@ -1,4 +1,5 @@
 import test from '@playwright/test';
+import { Browser, Page } from 'playwright';
 import { AJAXPage } from '../model/AJAXPage';
 import { CAPage } from '../model/CAPage';
 import { ClickPage } from '../model/ClickPage';
@@ -8,19 +9,21 @@ import { DTPage } from '../model/DTPage';
 import { HLPage } from '../model/HLPage';
 import { HomePage } from '../model/HomePage';
 import { LDPage } from '../model/LDPage';
+import { MOPage } from '../model/MOPage';
+import { NBSPPage } from '../model/NBSPPage';
+import { PBPage } from '../model/PBPage';
+import { SAPage } from '../model/SAPage';
 import { ScrollbarsPage } from '../model/ScrollbarsPage';
 import { TIPage } from '../model/TIPage';
+import { VisibilityPage } from '../model/VisibilityPage';
+import { VTPage } from '../model/VTPage';
 
 test.describe('Playwright UI Functional Test', () => {
     let homePage: HomePage;
 
-    test.beforeAll(async ({ browser }) => {
-        let page = await browser.newPage();
+    test.beforeEach(async ({ page }) => {
         homePage = new HomePage(page);
-    });
-
-    test.beforeEach(async () => {
-        homePage.visitPage();
+        await homePage.visitPage();
     });
 
     test.describe('Dynamic ID', async () => {
@@ -148,6 +151,86 @@ test.describe('Playwright UI Functional Test', () => {
         test('Get Chrome CPU Value', async () => {
             await dtPage.getChromeCPU();
             await dtPage.isChromeCPUShown();
+        });
+    });
+
+    test.describe('Verify Text', () => {
+        let vtPage: VTPage;
+
+        test.beforeEach(async () => {
+            vtPage = await homePage.clickVerifyText();
+        });
+
+        test('Find Welcome Username', async () => {
+            await vtPage.findText('Welcome UserName!');
+        });
+    });
+
+    test.describe('Progress Bar', () => {
+        let pbPage: PBPage;
+
+        test.beforeEach(async () => {
+            pbPage = await homePage.clickProgressBar();
+        });
+
+        test('Stop Progress Bar At 75%', async () => {
+            await pbPage.clickStart();
+            await pbPage.waitFor75();
+            await pbPage.clickStop();
+        });
+    });
+
+    test.describe('Visibility Page', () => {
+        let visibilityPage: VisibilityPage;
+
+        test.beforeEach(async () => {
+            visibilityPage = await homePage.clickVisibility();
+        });
+
+        test('Check Other Button Visibility', async () => {
+            await visibilityPage.clickHideBtn();
+            await visibilityPage.isOtherButtonVisible();
+        });
+    });
+
+    test.describe('Sample App', () => {
+        let saPage: SAPage;
+        let username = 'ghalistan';
+
+        test.beforeEach(async () => {
+            saPage = await homePage.clickSampleApp();
+        });
+
+        test(`Successfully Login as ${username}`, async () => {
+            await saPage.inputUsername(username);
+            await saPage.inputPassword('pwd');
+            await saPage.clickLogin();
+            await saPage.isLoggedIn(username);
+        });
+    });
+
+    test.describe('Mouse Over', () => {
+        let moPage: MOPage;
+
+        test.beforeEach(async () => {
+            moPage = await homePage.clickMouseOver();
+        });
+
+        test('Click Link Twice', async () => {
+            await moPage.clickLink();
+            await moPage.isClickedTwice();
+        });
+    });
+
+    test.describe('NBSP Page', () => {
+        let nbspPage: NBSPPage;
+
+        test.beforeEach(async () => {
+            nbspPage = await homePage.clickNBSP();
+        });
+
+        test('Detect Button With NBSP', async () => {
+            await nbspPage.isButtonDetected();
         });
     });
 });

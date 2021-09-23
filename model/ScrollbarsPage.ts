@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { PageModel } from './PageModel';
 
 export class ScrollbarsPage extends PageModel {
@@ -7,6 +7,8 @@ export class ScrollbarsPage extends PageModel {
     }
 
     async clickBlueButton() {
-        await this.page.click(`button[id="hidingButton"]`);
+        let hiddenBtn = await this.page.waitForSelector(`button#hidingButton`);
+        expect(await hiddenBtn.isVisible()).toBeTruthy();
+        await hiddenBtn.click({ force: true });
     }
 }
